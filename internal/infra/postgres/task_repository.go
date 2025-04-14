@@ -20,12 +20,12 @@ func NewTaskRepository(pool *pgxpool.Pool) *TaskRepository {
 	return &TaskRepository{pool: pool}
 }
 
-func (t *TaskRepository) InsertTask(ctx context.Context, task domain.Task) (*domain.Task, error){
+func (t *TaskRepository) InsertTask(ctx context.Context, task domain.Task) (*domain.Task, error) {
 	sql := "INSERT INTO tasks (title, description) VALUES ($1, $2) RETURNING id"
 
-	err := t.pool.QueryRow(ctx, sql, 
-		task.Title, 
-		task.Description, 
+	err := t.pool.QueryRow(ctx, sql,
+		task.Title,
+		task.Description,
 	).Scan(&task.ID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to save task: %w", err)
@@ -35,10 +35,10 @@ func (t *TaskRepository) InsertTask(ctx context.Context, task domain.Task) (*dom
 
 }
 
-func (t *TaskRepository) FetchTasks(ctx context.Context) ([]domain.Task, error){
+func (t *TaskRepository) FetchTasks(ctx context.Context) ([]domain.Task, error) {
 	panic("Not Implemented")
 }
-func (t *TaskRepository) GetTaskByID(ctx context.Context, id int) (*domain.Task, error){
+func (t *TaskRepository) GetTaskByID(ctx context.Context, id int) (*domain.Task, error) {
 	query := `
 		SELECT id, title, description, status
 		FROM tasks
@@ -64,9 +64,9 @@ func (t *TaskRepository) GetTaskByID(ctx context.Context, id int) (*domain.Task,
 	return &task, nil
 }
 
-func (t *TaskRepository) UpdateTask(ctx context.Context, id int) error{
+func (t *TaskRepository) UpdateTask(ctx context.Context, id int) error {
 	panic("Not Implemented")
 }
-func (t *TaskRepository) DeleteTask(ctx context.Context, id int) error{
+func (t *TaskRepository) DeleteTask(ctx context.Context, id int) error {
 	panic("Not Implemented")
 }

@@ -1,1 +1,17 @@
 .env
+
+.idea
+
+node_modules
+
+dist
+
+.vscode
+
+coverage
+
+*.log
+
+*.tsbuildinfo
+
+*.tgz

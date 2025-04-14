@@ -11,9 +11,9 @@ type TaskResponseDTO struct {
 
 func FromDomain(task domain.Task) TaskResponseDTO {
 	return TaskResponseDTO{
-		ID: task.ID,
-		Title: task.Title,
+		ID:          task.ID,
+		Title:       task.Title,
 		Description: task.Description,
-		Status: task.Status,
+		Status:      task.Status,
 	}
 }

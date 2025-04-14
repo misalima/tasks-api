@@ -11,17 +11,15 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-
-
 func TestGetTaskByID_Success(t *testing.T) {
 	mockRepo := new(mock_irepository.MockTaskRepository)
 	service := TaskServices{repo: mockRepo}
 
 	mockRepo.On("GetTaskByID", mock.Anything, 1).Return(&domain.Task{
-		ID: 1,
-		Title: "Do homework",
+		ID:          1,
+		Title:       "Do homework",
 		Description: "Geography and History homework",
-		Status: "pendente",
+		Status:      "pendente",
 	}, nil)
 
 	task, err := service.GetTaskByID(context.Background(), 1)
@@ -46,5 +44,5 @@ func TestGetTaskByID_NotFound(t *testing.T) {
 	assert.Nil(t, task)
 	assert.Equal(t, "task not found", err.Error())
 
-	mockRepo.AssertExpectations(t,)
+	mockRepo.AssertExpectations(t)
 }
