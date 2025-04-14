@@ -26,11 +26,11 @@ type Config struct {
 
 func LoadConfig() *Config {
 	postgresCfg := PostgresConfig{
-		User: getEnvOrDefault("DB_USER", "postgres"),
-		Host: getEnvOrDefault("DB_HOST", "localhost"),
+		User:     getEnvOrDefault("DB_USER", "postgres"),
+		Host:     getEnvOrDefault("DB_HOST", "localhost"),
 		Password: getEnvOrDefault("DB_PASSWORD", "postgres"),
-		Port: getEnvOrDefault("DB_PORT", "5432"),
-		DBName: getEnvOrDefault("DB_NAME", "tasks_db"),
+		Port:     getEnvOrDefault("DB_PORT", "5432"),
+		DBName:   getEnvOrDefault("DB_NAME", "tasks_db"),
 	}
 
 	serverCfg := ServerConfig{
@@ -40,7 +40,7 @@ func LoadConfig() *Config {
 
 	return &Config{
 		PostgresConfig: postgresCfg,
-		ServerConfig: serverCfg,
+		ServerConfig:   serverCfg,
 	}
 }
 

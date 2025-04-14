@@ -10,9 +10,8 @@ type CreateTaskDTO struct {
 
 func (dto *CreateTaskDTO) ToDomain() domain.Task {
 	return domain.Task{
-		Title: dto.Title,
+		Title:       dto.Title,
 		Description: dto.Description,
-		Status: dto.Status,
+		Status:      dto.Status,
 	}
 }
-

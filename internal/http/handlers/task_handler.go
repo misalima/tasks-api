@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"tasks-api/cmd/app/api/dto"
 	"tasks-api/internal/core/domain"
 	"tasks-api/internal/core/interfaces/iservice"
+	dto2 "tasks-api/internal/http/dto"
 
 	"github.com/labstack/echo/v4"
 )
@@ -21,16 +21,16 @@ func NewTaskHandler(service iservice.TaskManager) *TaskHandler {
 }
 
 func (h *TaskHandler) CreateTask(c echo.Context) error {
-	var createTask dto.CreateTaskDTO
+	var createTask dto2.CreateTaskDTO
 	if err := c.Bind(&createTask); err != nil {
 		log.Println("Error parsing request: ", err)
-		return c.JSON(http.StatusBadRequest, dto.ErrorResponse{
+		return c.JSON(http.StatusBadRequest, dto2.ErrorResponse{
 			Message: "Invalid request data",
 		})
 	}
 
 	if createTask.Title == "" || createTask.Description == "" {
-		return c.JSON(http.StatusBadRequest, dto.ErrorResponse{
+		return c.JSON(http.StatusBadRequest, dto2.ErrorResponse{
 			Message: "Invalid request data",
 		})
 	}
@@ -38,11 +38,11 @@ func (h *TaskHandler) CreateTask(c echo.Context) error {
 	task, err := h.service.CreateTask(c.Request().Context(), createTask.ToDomain())
 	if err != nil {
 		log.Println("Error while creating task: ", err)
-		return c.JSON(http.StatusInternalServerError, dto.ErrorResponse{Message: "Internal Server Error"})
+		return c.JSON(http.StatusInternalServerError, dto2.ErrorResponse{Message: "Internal Server Error"})
 	}
-	 
-	response := dto.FromDomain(*task)
-	
+
+	response := dto2.FromDomain(*task)
+
 	return c.JSON(http.StatusCreated, response)
 }
 
@@ -50,15 +50,15 @@ func (h *TaskHandler) GetTaskByID(c echo.Context) error {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, dto.ErrorResponse{Message: "Invalid request data"})
+		return c.JSON(http.StatusBadRequest, dto2.ErrorResponse{Message: "Invalid request data"})
 	}
 	task, err := h.service.GetTaskByID(c.Request().Context(), id)
 	if err != nil {
 		if errors.Is(err, domain.ErrTaskNotFound) {
-			return c.JSON(http.StatusNotFound, dto.ErrorResponse{Message: "Task not found"})
+			return c.JSON(http.StatusNotFound, dto2.ErrorResponse{Message: "Task not found"})
 		}
-		return c.JSON(http.StatusInternalServerError, dto.ErrorResponse{Message: "Internal Server Error"})
+		return c.JSON(http.StatusInternalServerError, dto2.ErrorResponse{Message: "Internal Server Error"})
 	}
-	response := dto.FromDomain(*task)
+	response := dto2.FromDomain(*task)
 	return c.JSON(http.StatusOK, response)
 }

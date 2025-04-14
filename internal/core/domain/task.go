@@ -1,9 +1,8 @@
 package domain
 
 type Task struct {
-	ID int
-	Title string
+	ID          int
+	Title       string
 	Description string
-	Status string
+	Status      string
 }
-

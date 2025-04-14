@@ -7,7 +7,6 @@ import (
 	"tasks-api/internal/core/interfaces/iservice"
 )
 
-
 var _ iservice.TaskManager = (*TaskServices)(nil)
 
 type TaskServices struct {
@@ -29,7 +28,7 @@ func (s *TaskServices) CreateTask(ctx context.Context, task domain.Task) (*domai
 	return createdTask, nil
 }
 
-func (s *TaskServices) ListTasks(ctx context.Context, ) ([]domain.Task, error) {
+func (s *TaskServices) ListTasks(ctx context.Context) ([]domain.Task, error) {
 	panic("Not implemented")
 }
 func (s *TaskServices) GetTaskByID(ctx context.Context, id int) (*domain.Task, error) {
